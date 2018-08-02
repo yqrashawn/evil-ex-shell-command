@@ -1,0 +1,17 @@
+* evil-ex-shell-command
+Invoke ~shell-command~ right from ~evil-ex~.
+
+* Usage
+Default invoke fasd when the evil-ex-command with prefix ~;~, eg. ~:;ls~.
+
+You can change the prefix by ~(setq evil-ex-fasd-prefix "x ")~, then ~:x ls~.
+
+There's also a command ~evil-ex-shell-command~ that invoke ~evil-ex~ and insert
+the prefix for you.
+
+* Tips
+- call ~async-shell-command~ by end command with ~&~, ~:;ls&~
+- [[https://stackoverflow.com/a/12229404/5671288][make emacs recognize your shell aliases]]
+
+* Dependency
+[[http://melpa.org/#/evil][evil]]
