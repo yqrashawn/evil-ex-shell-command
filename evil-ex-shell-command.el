@@ -31,17 +31,17 @@
 (require 'evil)
 
 (defvar evil-ex-shell-command-prefix ";"
-  "Prefix for evil-ex command that will invoke `shell-command'.")
+  "Prefix for ‘evil-ex’ command that will invoke `shell-command'.")
 
 (defun evil-ex-shell-command-eval (orig-fun str)
-  "Advice for evil-ex-execute. ORIG-FUN is `evil-ex-execute', STR is the command input."
+  "Advice for ‘evil-ex-execute’. ORIG-FUN is `evil-ex-execute', STR is the command input."
   (if (not (cond
             ((string-prefix-p evil-ex-shell-command-prefix str)
-             (funcall 'shell-command
+             (funcall #'shell-command
                       (string-remove-prefix evil-ex-shell-command-prefix str)))))
       (funcall orig-fun str)))
 
-(advice-add 'evil-ex-execute :around 'evil-ex-shell-command-eval)
+(advice-add #'evil-ex-execute :around 'evil-ex-shell-command-eval)
 
 ;;;###autoload
 (defun evil-ex-shell-command ()
