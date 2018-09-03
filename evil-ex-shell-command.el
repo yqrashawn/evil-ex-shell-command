@@ -4,7 +4,7 @@
 
 ;; Version: 0.1.0
 ;; URL: https://github.com/yqrashawn/evil-ex-shell-command
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "24.4") (evil "1.1.0"))
 ;; Author: Rashawn Zhang <namy.19@gmail.com>
 ;; Created:  2 August 2018
 ;; Keywords: tools, shell-command, evil
