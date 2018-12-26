@@ -2,7 +2,7 @@
 
 ;; Copyright © 2018, Rashawn Zhang, all rights reserved.
 
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; URL: https://github.com/yqrashawn/evil-ex-shell-command
 ;; Package-Requires: ((emacs "24.4") (evil "1.1.0"))
 ;; Author: Rashawn Zhang <namy.19@gmail.com>
@@ -33,11 +33,34 @@
 (defvar evil-ex-shell-command-prefix ";"
   "Prefix for ‘evil-ex’ command that will invoke `shell-command'.")
 
+(defvar evil-ex-shell-command-prefer-async-shell-command t
+  "Wether prefer async shell command.")
+
+(defvar evil-ex-shell-command-prefer-witdh-editor-shell-command t
+  "Wether prefer with editor shell command. Only use withd-editor shell command when they are loaded.")
+
+(defun evil-ex-shell-command-shell-command-to-invoke ()
+  "Get the right shell command function to call."
+  (cond ((and evil-ex-shell-command-prefer-async-shell-command
+              evil-ex-shell-command-prefer-witdh-editor-shell-command
+              (fboundp #'with-editor-async-shell-command))
+         #'with-editor-async-shell-command)
+        ((and (not evil-ex-shell-command-prefer-async-shell-command
+                   evil-ex-shell-command-prefer-witdh-editor-shell-command
+                   (fboundp #'with-editor-shell-command)))
+         #'with-editor-shell-command)
+        ((and evil-ex-shell-command-prefer-async-shell-command
+              (not evil-ex-shell-command-prefer-witdh-editor-shell-command))
+         #'async-shell-command)
+        ((and (not evil-ex-shell-command-prefer-async-shell-command
+                   (not evil-ex-shell-command-prefer-witdh-editor-shell-command))
+              #'shell-command))))
+
 (defun evil-ex-shell-command-eval (orig-fun str)
   "Advice for ‘evil-ex-execute’. ORIG-FUN is `evil-ex-execute', STR is the command input."
   (if (not (cond
             ((string-prefix-p evil-ex-shell-command-prefix str)
-             (funcall #'shell-command
+             (funcall (evil-ex-shell-command-shell-command-to-invoke)
                       (string-remove-prefix evil-ex-shell-command-prefix str)))))
       (funcall orig-fun str)))
 

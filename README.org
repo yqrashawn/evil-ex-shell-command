@@ -13,5 +13,9 @@ the prefix for you.
 - call ~async-shell-command~ by end command with ~&~, ~:;ls&~
 - [[https://stackoverflow.com/a/12229404/5671288][make emacs recognize your shell aliases]]
 
+* ChangeLog
+- v0.1.1
+add ~evil-ex-shell-command-prefer-async-shell-command~ and ~evil-ex-shell-command-prefer-witdh-editor-shell-command~.
+
 * Dependency
 [[http://melpa.org/#/evil][evil]]
